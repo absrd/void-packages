@@ -1,12 +1,15 @@
 # Template file for 'pipewire'
 pkgname=pipewire
-version=0.2.7
+_major_minor=0.3
+version=${_major_minor}.2
+_spa_version=0.2
 revision=1
+wrksrc=pipewire-${version}
 build_style=meson
-configure_args="-Dman=true -Dgstreamer=enabled -Ddocs=true -Dsystemd=false"
+configure_args="-Dman=true -Dgstreamer=true -Ddocs=true -Dsystemd=false -Dffmpeg=true"
 hostmakedepends="doxygen graphviz pkg-config xmltoman"
 makedepends="SDL2-devel ffmpeg-devel gst-plugins-base1-devel jack-devel
- sbc-devel v4l-utils-devel libva-devel"
+ sbc-devel v4l-utils-devel libva-devel libbluetooth-devel"
 short_desc="Server and user space API to deal with multimedia pipelines"
 maintainer="Orphaned <orphan@voidlinux.org>"
 #Next release will probably change to MIT, currently listed in master
@@ -14,13 +17,15 @@ license="LGPL-2.1-only, GPL-2.0-only "
 homepage="https://pipewire.org/"
 changelog="https://raw.githubusercontent.com/PipeWire/pipewire/master/NEWS"
 distfiles="https://github.com/PipeWire/pipewire/archive/${version}.tar.gz"
-checksum=bfaa0f6ae6c0791e2e0b59234d399753bf24f1b33dbf587682363a8463dd8df1
+checksum=fd1bb2ae65997d921d6c18e1828f23251dac3145bbe5031c324afeb39f9b26fb
 conf_files="/etc/pipewire/pipewire.conf"
 
 libpipewire_package() {
 	short_desc+=" - pipewire library"
+    shlib_provides="libpipewire-0.2.so.1"
 	pkg_install() {
-		vmove "usr/lib/libpipewire-0.2.so.*"
+		vmove "usr/lib/libpipewire-${_major_minor}.so.*"
+        ln -sfr ${PKGDESTDIR}/usr/lib/libpipewire-${_major_minor}.so.0 ${PKGDESTDIR}/usr/lib/libpipewire-0.2.so.1
 	}
 }
 
@@ -28,25 +33,25 @@ pipewire-devel_package() {
 	depends="libpipewire-${version}_${revision}"
 	short_desc+=" - pipewire and libspa development files"
 	pkg_install() {
-		vmove usr/include/pipewire
-		vmove usr/include/spa
-		vmove usr/lib/pkgconfig/libpipewire-0.2.pc
-		vmove usr/lib/pkgconfig/libspa-0.1.pc
-		vmove usr/lib/libpipewire-0.2.so
+		vmove usr/include/pipewire-${_major_minor}
+		vmove usr/include/spa-${_spa_version}
+		vmove usr/lib/pkgconfig/libpipewire-${_major_minor}.pc
+		vmove usr/lib/pkgconfig/libspa-${_spa_version}.pc
+		vmove usr/lib/libpipewire-${_major_minor}.so
 	}
 }
 
 libspa-ffmpeg_package() {
 	short_desc+=" - ffmpeg plugins"
 	pkg_install() {
-		vmove usr/lib/spa/ffmpeg
+		vmove usr/lib/spa-${_spa_version}/ffmpeg
 	}
 }
 
 libspa-bluetooth_package() {
 	short_desc+=" - bluetooth plugins"
 	pkg_install() {
-		vmove usr/lib/spa/bluez5
+		vmove usr/lib/spa-${_spa_version}/bluez5
 	}
 }
 
