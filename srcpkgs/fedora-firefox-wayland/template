@@ -1,0 +1,40 @@
+pkgname=fedora-firefox-wayland
+version=75.0
+revision=2
+wrksrc="$pkgname-$version"
+create_wrksrc=yes
+# fedora version
+fc="fc32"
+hostmakedepends="rpmextract"
+makedepends="nss-devel libjpeg-turbo-devel gtk+-devel gtk+3-devel icu-devel
+ pixman-devel libevent-devel libnotify-devel libvpx-devel
+ libXrender-devel libXcomposite-devel libSM-devel libXt-devel rust-std
+ libXdamage-devel freetype-devel"
+depends="nss>=3.47.1 desktop-file-utils hicolor-icon-theme"
+conflicts="firefox-esr firefox"
+short_desc="Fedora's firefox build with wayland enabled by default"
+maintainer="Felix Kleinschmidt <fk@bsrd.io>"
+license="MPL, GPL, LGPL"
+homepage="https://www.mozilla.org/firefox/"
+distfiles="https://kojipkgs.fedoraproject.org/packages/firefox/$version/1.$fc/x86_64/firefox-$version-1.$fc.x86_64.rpm
+           https://download-ib01.fedoraproject.org/pub/fedora/linux/development/32/Everything/x86_64/os/Packages/l/libffi-3.1-24.fc32.x86_64.rpm"
+checksum="2021838e67bf96dad3f2dce24a8baace217b72a976d6f949c51dbea847e0e27b
+          86c87a4169bdf75c6d3a2f11d3a7e20b6364b2db97c74bc7eb62b1b22bc54401"
+nocross=yes
+nopie=yes
+archs="x86_64*"
+
+post_extract() {
+    rm -f ${wrksrc}/usr/lib64/firefox/browser/defaults/preferences/firefox-redhat-default-prefs.js
+    sed -i '72d;73d;75d;76d;' ${wrksrc}/usr/bin/firefox
+}
+
+do_install() {
+  # Avoid conflicts
+  rm -rf ${wrksrc}/usr/lib
+  rm -rf ${wrksrc}/usr/share/licenses/
+  rm -rf ${wrksrc}/usr/share/doc/
+
+  mv ${wrksrc}/usr/lib64 ${wrksrc}/usr/lib
+  cp -r ${wrksrc}/usr ${DESTDIR}
+}
