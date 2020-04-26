@@ -22,7 +22,7 @@ desc_option_vaapi="Enable support for VA-API"
 
 hostmakedepends="$(vopt_if clang clang) yasm python pkgconf perl gperf bison ninja nodejs hwids
  libatomic-devel libevent-devel libglib-devel $(vopt_if js_optimize openjdk)"
-makedepends="libpng-devel gtk+-devel gtk+3-devel nss-devel pciutils-devel
+makedepends="libpng-devel gtk+-devel gtk+3-devel nss-devel pciutils-devel pipewire02-devel
  libXi-devel libgcrypt-devel libgnome-keyring-devel cups-devel elfutils-devel
  libXcomposite-devel speech-dispatcher-devel libXrandr-devel mit-krb5-devel
  libXScrnSaver-devel alsa-lib-devel snappy-devel libdrm-devel
@@ -32,7 +32,7 @@ makedepends="libpng-devel gtk+-devel gtk+3-devel nss-devel pciutils-devel
  minizip-devel jsoncpp-devel zlib-devel libcap-devel libXdamage-devel
  re2-devel fontconfig-devel freetype-devel opus-devel
  ffmpeg-devel libva-devel"
-depends="libexif hwids desktop-file-utils hicolor-icon-theme xdg-utils"
+depends="libexif hwids desktop-file-utils hicolor-icon-theme xdg-utils libpipewire02"
 
 build_options_default="clang"
 
@@ -163,6 +163,7 @@ do_configure() {
 		'enable_widevine=true'
 		'enable_hangout_services_extension=true'
 		'is_desktop_linux=true'
+        'rtc_use_pipewire=true'
 	)
 	
 	conf+=(

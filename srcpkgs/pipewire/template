@@ -20,12 +20,15 @@ distfiles="https://github.com/PipeWire/pipewire/archive/${version}.tar.gz"
 checksum=fd1bb2ae65997d921d6c18e1828f23251dac3145bbe5031c324afeb39f9b26fb
 conf_files="/etc/pipewire/pipewire.conf"
 
+post_install() {
+		mv ${DESTDIR}/usr/include/pipewire-${_major_minor}/pipewire ${DESTDIR}/usr/include/
+		mv ${DESTDIR}/usr/include/spa-${_spa_version}/spa ${DESTDIR}/usr/include/
+}
+
 libpipewire_package() {
 	short_desc+=" - pipewire library"
-    shlib_provides="libpipewire-0.2.so.1"
 	pkg_install() {
 		vmove "usr/lib/libpipewire-${_major_minor}.so.*"
-        ln -sfr ${PKGDESTDIR}/usr/lib/libpipewire-${_major_minor}.so.0 ${PKGDESTDIR}/usr/lib/libpipewire-0.2.so.1
 	}
 }
 
@@ -33,8 +36,8 @@ pipewire-devel_package() {
 	depends="libpipewire-${version}_${revision}"
 	short_desc+=" - pipewire and libspa development files"
 	pkg_install() {
-		vmove usr/include/pipewire-${_major_minor}
-		vmove usr/include/spa-${_spa_version}
+		vmove usr/include/pipewire
+		vmove usr/include/spa
 		vmove usr/lib/pkgconfig/libpipewire-${_major_minor}.pc
 		vmove usr/lib/pkgconfig/libspa-${_spa_version}.pc
 		vmove usr/lib/libpipewire-${_major_minor}.so
