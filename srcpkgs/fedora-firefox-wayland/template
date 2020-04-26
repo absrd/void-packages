@@ -10,7 +10,7 @@ makedepends="nss-devel libjpeg-turbo-devel gtk+-devel gtk+3-devel icu-devel
  pixman-devel libevent-devel libnotify-devel libvpx-devel
  libXrender-devel libXcomposite-devel libSM-devel libXt-devel rust-std
  libXdamage-devel freetype-devel"
-depends="nss>=3.47.1 desktop-file-utils hicolor-icon-theme"
+depends="nss>=3.47.1 desktop-file-utils hicolor-icon-theme libpipewire02"
 conflicts="firefox-esr firefox"
 short_desc="Fedora's firefox build with wayland enabled by default"
 maintainer="Felix Kleinschmidt <fk@bsrd.io>"
