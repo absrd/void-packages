@@ -4543,3 +4543,8 @@ libflashrom.so.1 flashrom-1.4.0_1
 libpyside6.so.6.7 libpyside6-6.7.2_1
 libpyside6qml.so.6.7 libpyside6-6.7.2_1
 libshiboken6.so.6.7 libshiboken6-6.7.2_1
+libsdbus-c++.so.1 sdbus-cpp-1.5.0_1
+libhyprlang.so.2 hyprlang-0.5.0_1
+libhyprcursor.so.0 hyprcursor-0.1.5_1
+libhyprutils.so.0 hyprutils-0.1.2_1
+libtomlplusplus.so.3 tomlplusplus-3.4.0_1
